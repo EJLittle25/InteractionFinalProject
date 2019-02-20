@@ -14,13 +14,14 @@ function setup() {
     gSlider.position(20, 50);
     bSlider = createSlider(0, 255, 255);
     bSlider.position(20, 80);
-
+//Creates the sliders for changing the colors of the mosaic tiles.
     for (var j = 0; j < rows; j++){
         for(var i= 0; i < cols; i++) {
             var cell = new Square(i*w,j*w, w, w);
             grid.push(cell);
         }
     }
+//Creates the grid necessary for the "mosaic" feel.
 
 }
 
@@ -36,6 +37,7 @@ function draw() {
     text('red', rSlider.x * 2 + rSlider.width, 28);
     text('green', gSlider.x * 2 + gSlider.width, 58);
     text('blue', bSlider.x * 2 + bSlider.width, 88);
+    //Adds text next to the sliders so you know which is which.
 
     if(keyIsDown(UP_ARROW)){
         push();
@@ -48,6 +50,8 @@ function draw() {
         text('Use the Sliders!', windowWidth-180, windowHeight - 90);
         text('Click or Drag', windowWidth-180, windowHeight - 60);
     }
+    //Pulls up a help menu if the up arrow is pressed. Tells instructions for clearing, sliders,
+    //and how to draw.
 }       
 
 function keyTyped(){
@@ -60,6 +64,7 @@ if (key === 'c'){
             }
         }
     }
+    //Clears the entire board by pressing "c" for clear.
 }
 
 function mousePressed(){
@@ -67,10 +72,12 @@ function mousePressed(){
         grid[i].clicked(mouseX, mouseY);
              }
         }
+//Fills in a square if the mouse is pressed 
 function mouseDragged(){
     for (var i = 0; i < grid.length; i++) {
         grid[i].dragger(mouseX, mouseY);
     }
+//Fills in squares quickly if mouse is dragged.
 }
 
 
@@ -94,14 +101,20 @@ class Square{
         }else{
             this.over = false;
         }
-    }
+        //Temporarily fills a square with a lighter/darker version of the color that will
+    //Generate when ptressed when hovered over.
    
+    }
+
     clicked(mx, my){
         let d = dist(mx, my, this.x, this.y);
         if(d<this.w/1.8){
             this.isclicked = true;
             fill(255, 0, 255);
         }
+
+    //Triggers this.isclicked to equal true if the mouse is over a squared and clicked. This
+    //Fills in the square
     }
     dragger(mx, my){
         let d = dist(mx, my, this.x, this.y);
@@ -109,6 +122,8 @@ class Square{
             this.isdragged= true;
             fill(255, 0, 255);
         }
+    //Triggers this.isdragged to equal true if the mouse is over a squared and dragged. This
+    //Fills in the square
     }
 
     display(){
@@ -117,17 +132,20 @@ class Square{
         const b = bSlider.value();
         if(this.over){
             fill(r, g, b, 63);
+            //Temporarily fills a square until mouse is moved or pressed.
         }else{
             fill(255);
         }
         if(this.isclicked){
             fill(r, g, b);
+            //Fills in with color determine by slider
         }
         if(this.isdragged){
             fill(r, g, b);
+            //Fills in with color determine by slider
         }
         rect(this.x, this.y, w, w)
-        //this.isclicked = false;
+        //Draws a rectangle
     }
 
 
